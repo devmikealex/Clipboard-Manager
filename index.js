@@ -54,9 +54,19 @@ function handleKey(str, key) {
             const filePath = path.join(clipsDir, files[index])
             const content = fs.readFileSync(filePath, 'utf-8')
             console.clear()
-            console.log(`Copied: ${files[index]}\n`)
+            console.log(`File : ${path.parse(files[index]).name}\n`)
+            console.log(
+                `Content:\n${
+                    content.length <= 300 ? content : content.slice(0, 300) + '...'
+                }\n`
+            )
             setTimeout(showMenu, 1500)
-            clipboardy.writeSync(content)
+            // clipboardy.writeSync(content)
+            if (content.length === 0) {
+                clipboardy.writeSync(path.parse(files[index]).name)
+            } else {
+                clipboardy.writeSync(content)
+            }
         }
     }
 }
